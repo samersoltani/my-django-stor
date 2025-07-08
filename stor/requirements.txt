@@ -5,6 +5,7 @@ cached-property==2.0.1
 certifi==2025.6.15
 charset-normalizer==3.4.2
 defusedxml==0.7.1
+dj-database-url==3.0.1
 Django==5.2.1
 django-hashid-field==3.4.1
 gunicorn==23.0.0
