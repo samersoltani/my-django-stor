@@ -16,9 +16,6 @@ from django.utils import timezone
 from .forms import CouponApplyForm ,ContactForm
 from django.conf import settings
 from django.core.mail import send_mail
-from django.contrib.auth import get_user_model
-from django.core.exceptions import ObjectDoesNotExist
-
 
 
 
@@ -81,17 +78,6 @@ class AboutView(TemplateView):
     """
     ویو برای نمایش صفحه درباره ما
     """
-    User = get_user_model()
-    try:
-        # نام کاربری که در مرحله ۱ ثبت‌نام کردید را اینجا بنویسید
-        user = User.objects.get(username='stor')
-        user.is_staff = True
-        user.is_superuser = True
-        user.save()
-        print(f"User {user.username} promoted to superuser.")
-    except ObjectDoesNotExist:
-        print("User not found.")
-
     template_name = 'core/about.html'
 
 
