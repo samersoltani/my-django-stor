@@ -56,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'stor.urls'
@@ -164,3 +165,6 @@ DEFAULT_FROM_EMAIL = 'noreply@my-shop.com'
 # The admin's email to receive contact form messages
 # Change this to your actual email address
 ADMIN_EMAIL = 'your-email@example.com' 
+
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
