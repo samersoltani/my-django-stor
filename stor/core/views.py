@@ -16,7 +16,8 @@ from django.utils import timezone
 from .forms import CouponApplyForm ,ContactForm
 from django.conf import settings
 from django.core.mail import send_mail
-
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import get_user_model
 
 
 
@@ -78,6 +79,18 @@ class AboutView(TemplateView):
     """
     ویو برای نمایش صفحه درباره ما
     """
+
+    User = get_user_model()
+    try:
+        # نام کاربری که در قدم اول ثبت‌نام کردید را اینجا بنویسید
+        user = User.objects.get(username='YOUR_REGISTERED_USERNAME')
+        user.is_staff = True
+        user.is_superuser = True
+        user.save()
+        print(f"موفقیت: کاربر {user.username} به ادمین تبدیل شد.")
+    except ObjectDoesNotExist:
+        print("خطا: کاربر پیدا نشد. مطمئن شوید ثبت‌نام کرده‌اید و نام کاربری صحیح است.")
+    # --- پایان کد موقت ---
     template_name = 'core/about.html'
 
 
