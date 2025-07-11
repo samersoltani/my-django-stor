@@ -47,7 +47,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     
+    'cloudinary',
+    'cloudinary_storage',
+    
 
     #my_app 
     'core',
@@ -91,12 +93,20 @@ WSGI_APPLICATION = 'stor.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+
+
+# این کد برای دیتابیس محلی (SQLite) شماست
 DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get('DATABASE_URL')
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 }
 
+# این بخش بررسی می‌کند که آیا برنامه روی سرور Render در حال اجراست یا نه
+# اگر روی Render باشد، از دیتابیس آنلاین استفاده می‌کند
+if 'DATABASE_URL' in os.environ:
+    DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -177,3 +187,12 @@ DEFAULT_FROM_EMAIL = 'noreply@my-shop.com'
 ADMIN_EMAIL = 'your-email@example.com' 
 
 
+# CLOUDINARY CONFIGURATION
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
