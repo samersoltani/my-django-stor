@@ -24,7 +24,7 @@ class Product(models.Model):
     category = models.ForeignKey(Category, related_name='product',on_delete=models.CASCADE)
     name = models.CharField(max_length=200 ,db_index=True)
     slug = models.SlugField(max_length=200 ,db_index=True)
-    image = CloudinaryField('image', blank=True, null=True, help_text="تصویر اصلی محصول") 
+    image = CloudinaryField('تصویر اصلی محصول', blank=True, null=True) 
     description= models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available = models.BooleanField(default=True)
@@ -51,8 +51,8 @@ class ProductImage(models.Model):
     # هر عکس به یک محصول مرتبط است
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images', verbose_name='محصول')
     # فیلد خود عکس
-    image = models.ImageField(upload_to='product_images/', verbose_name='تصویر')
-
+    image = CloudinaryField('تصویر', blank=True, null=True)  
+       
     class Meta:
         verbose_name = 'تصویر محصول'
         verbose_name_plural = 'تصاویر محصول'
@@ -60,9 +60,11 @@ class ProductImage(models.Model):
     def __str__(self):
         return f"تصویر برای {self.product.name}"
     
+    # def get_absolute_url(self):
+    #     # اضافه کردن پیشوند 'core:' به نام URL
+    #     return reverse('core:product_detail', args=[self.id])
     def get_absolute_url(self):
-        # اضافه کردن پیشوند 'core:' به نام URL
-        return reverse('core:product_detail', args=[self.id])
+        return reverse('core:product_detail', args=[self.product.id])
 # ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
@@ -136,17 +138,17 @@ class Order(models.Model):
 
     
     class Meta:
-        verbose_name = ('-created_at')
-        verbose_name_plural = 'سفارش'
-        verbose_name_plural ='سفارش ها'
+        ordering = ('-created_at',)  # این برای ترتیب‌دهی است
+        verbose_name = 'سفارش'
+        verbose_name_plural = 'سفارش ها'
 
 
     def __str__(self):
         return f'سفارش{self.id}'
 
-    def get_total_cost(self):
-        return sum(item.get_cost()for item in self.item.all())
-    
+  # داخل کلاس Order
+def get_total_cost(self):
+    return sum(item.get_cost() for item in self.items.all())
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order , on_delete=models.CASCADE ,related_name='items')
