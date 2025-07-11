@@ -75,11 +75,10 @@ class ProductDetailView(DetailView):
 
 
 
-class AboutView(TemplateView):
+class AboutView(View):
     """
     ویو برای نمایش صفحه درباره ما
     """
-
     User = get_user_model()
     try:
         # نام کاربری که در قدم اول ثبت‌نام کردید را اینجا بنویسید
