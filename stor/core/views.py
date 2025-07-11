@@ -76,26 +76,31 @@ class ProductDetailView(DetailView):
         return context
 
 
-
 class AboutView(TemplateView):
     """
     ویو برای نمایش صفحه درباره ما
     """
-    User = get_user_model()
-    try:
-        # نام کاربری که در قدم اول ثبت‌نام کردید را اینجا بنویسید
-        user = User.objects.get(username='ُSamer')
-        user.is_staff = True
-        user.is_superuser = True
-        user.save()
-        print(f"موفقیت: کاربر {user.username} به ادمین تبدیل شد.")
-    except ObjectDoesNotExist:
-        print("خطا: کاربر پیدا نشد. مطمئن شوید ثبت‌نام کرده‌اید و نام کاربری صحیح است.")
-    # --- پایان کد موقت ---
-
     template_name = 'core/about.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
 
+        # --- شروع کد موقت برای ساخت ادمین ---
+        User = get_user_model()
+        try:
+            # نام کاربری که با آن ثبت‌نام کردید را اینجا بنویسید
+            user = User.objects.get(username='YOUR_REGISTERED_USERNAME')
+            user.is_staff = True
+            user.is_superuser = True
+            user.save()
+            print(f"موفقیت: کاربر {user.username} به ادمین تبدیل شد.")
+            context['promotion_message'] = f"کاربر {user.username} با موفقیت به ادمین تبدیل شد."
+        except ObjectDoesNotExist:
+            print("خطا: کاربر پیدا نشد.")
+            context['promotion_message'] = "کاربر مورد نظر برای ارتقا پیدا نشد."
+        # --- پایان کد موقت ---
+        
+        return context
 
     """
     ویو برای نمایش صفحه تماس با ما
