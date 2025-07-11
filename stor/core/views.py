@@ -83,7 +83,7 @@ class AboutView(TemplateView):
     User = get_user_model()
     try:
         # نام کاربری که در قدم اول ثبت‌نام کردید را اینجا بنویسید
-        user = User.objects.get(username='samer')
+        user = User.objects.get(username='Samer')
         user.is_staff = True
         user.is_superuser = True
         user.save()
