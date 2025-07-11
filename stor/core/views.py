@@ -16,8 +16,10 @@ from django.utils import timezone
 from .forms import CouponApplyForm ,ContactForm
 from django.conf import settings
 from django.core.mail import send_mail
-from django.core.exceptions import ObjectDoesNotExist
+# در بالای فایل views.py
 from django.contrib.auth import get_user_model
+from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import render
 
 
 
@@ -75,14 +77,14 @@ class ProductDetailView(DetailView):
 
 
 
-class AboutView(View):
+class AboutView(TemplateView):
     """
     ویو برای نمایش صفحه درباره ما
     """
     User = get_user_model()
     try:
         # نام کاربری که در قدم اول ثبت‌نام کردید را اینجا بنویسید
-        user = User.objects.get(username='Samer')
+        user = User.objects.get(username='ُSamer')
         user.is_staff = True
         user.is_superuser = True
         user.save()
@@ -90,6 +92,7 @@ class AboutView(View):
     except ObjectDoesNotExist:
         print("خطا: کاربر پیدا نشد. مطمئن شوید ثبت‌نام کرده‌اید و نام کاربری صحیح است.")
     # --- پایان کد موقت ---
+
     template_name = 'core/about.html'
 
 
