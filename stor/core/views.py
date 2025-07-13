@@ -16,10 +16,10 @@ from django.utils import timezone
 from .forms import CouponApplyForm ,ContactForm
 from django.conf import settings
 from django.core.mail import send_mail
-# در بالای فایل views.py
-from django.contrib.auth import get_user_model
-from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
+
+# from django.contrib.auth import get_user_model
+# from django.core.exceptions import ObjectDoesNotExist
+# from django.shortcuts import render
 
 
 
@@ -85,22 +85,22 @@ class AboutView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        # --- شروع کد موقت برای ساخت ادمین ---
-        User = get_user_model()
-        try:
-            # نام کاربری که با آن ثبت‌نام کردید را اینجا بنویسید
-            user = User.objects.get(username='Samer')
-            user.is_staff = True
-            user.is_superuser = True
-            user.save()
-            print(f"موفقیت: کاربر {user.username} به ادمین تبدیل شد.")
-            context['promotion_message'] = f"کاربر {user.username} با موفقیت به ادمین تبدیل شد."
-        except ObjectDoesNotExist:
-            print("خطا: کاربر پیدا نشد.")
-            context['promotion_message'] = "کاربر مورد نظر برای ارتقا پیدا نشد."
-        # --- پایان کد موقت ---
+        # # --- شروع کد موقت برای ساخت ادمین ---
+        # User = get_user_model()
+        # try:
+        #     # نام کاربری که با آن ثبت‌نام کردید را اینجا بنویسید
+        #     user = User.objects.get(username='Samer_Admin')
+        #     user.is_staff = True
+        #     user.is_superuser = True
+        #     user.save()
+        #     print(f"موفقیت: کاربر {user.username} به ادمین تبدیل شد.")
+        #     context['promotion_message'] = f"کاربر {user.username} با موفقیت به ادمین تبدیل شد."
+        # except ObjectDoesNotExist:
+        #     print("خطا: کاربر پیدا نشد.")
+        #     context['promotion_message'] = "کاربر مورد نظر برای ارتقا پیدا نشد."
+        # # --- پایان کد موقت ---
         
-        return context
+        # return context
 
     """
     ویو برای نمایش صفحه تماس با ما
