@@ -17,10 +17,12 @@ django-render-partial==0.4
 django-social-share==2.3.0
 django-widget-tweaks==1.5.0
 filelock==3.17.0
+gunicorn==23.0.0
 idna==3.10
 include==0.2.2
 instaloader==4.14
 loader==2017.9.11
+packaging==25.0
 path==17.1.0
 pillow==11.1.0
 platformdirs==4.3.6
