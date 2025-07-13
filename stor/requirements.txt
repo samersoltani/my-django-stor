@@ -3,12 +3,14 @@ beautifulsoup4==4.12.3
 bs4==0.0.2
 certifi==2024.12.14
 charset-normalizer==3.4.0
+cloudinary==1.44.1
 cowsay==6.1
 distlib==0.3.9
 dj-database-url==3.0.1
 Django==5.1.4
 django-allauth==65.8.0
 django-cleanup==9.0.0
+django-cloudinary-storage==0.3.0
 django-crispy-forms==2.3
 django-extensions==4.1
 django-render-partial==0.4
@@ -24,6 +26,7 @@ pillow==11.1.0
 platformdirs==4.3.6
 pytz==2024.2
 requests==2.32.3
+six==1.17.0
 soupsieve==2.6
 sqlparse==0.5.1
 tk==0.1.0
