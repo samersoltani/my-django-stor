@@ -20,7 +20,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # در محیط آنلاین، دیباگ همیشه باید خاموش باشد
-DEBUG = True 
+DEBUG = False 
 
 # تنظیمات پیشرفته و امن برای هاست‌های مجاز
 ALLOWED_HOSTS = []
