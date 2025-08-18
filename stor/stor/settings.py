@@ -1,6 +1,8 @@
+# stor/stor/settings.py
+
 import os
 from pathlib import Path
-import dj_database_url
+# ما دیگر از dj_database_url استفاده نمی‌کنیم، پس این ایمپورت را حذف می‌کنیم
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -70,21 +72,30 @@ TEMPLATES = [
 WSGI_APPLICATION = 'stor.wsgi.application'
 
 # ==============================================================================
-# DATABASE 
+# DATABASE (بخش بازنویسی شده و بسیار مهم)
 # ==============================================================================
 
-if 'DATABASE_URL' in os.environ:
-    # اگر روی سرور Render اجرا شود، از این تنظیمات استفاده می‌کند
-    DATABASES = {
-        'default': dj_database_url.config(conn_max_age=600)
+# ابتدا به صورت پیش‌فرض دیتابیس را SQLite در نظر می‌گیریم
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-else:
-    # اگر روی کامپیوتر شما اجرا شود، از این دیتابیس SQLite استفاده می‌کند
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+}
+
+# اگر روی سرور اجرا شود (یعنی DATABASE_URL وجود داشته باشد)، تنظیمات را بازنویسی می‌کنیم
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL:
+    # از یک پکیج استاندارد برای پردازش URL استفاده می‌کنیم
+    from urllib.parse import urlparse
+    url = urlparse(DATABASE_URL)
+    DATABASES['default'] = {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': url.path[1:],
+        'USER': url.username,
+        'PASSWORD': url.password,
+        'HOST': url.hostname,
+        'PORT': url.port,
     }
 
 # ==============================================================================
