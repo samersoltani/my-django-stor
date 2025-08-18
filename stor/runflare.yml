@@ -1,7 +1,0 @@
-# This goes inside runflare.yml
-build:
-  - pip install -r requirements.txt
-  - python manage.py collectstatic --no-input
-  - python manage.py migrate
-run:
-  web: gunicorn stor.wsgi:application
