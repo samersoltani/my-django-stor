@@ -78,16 +78,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'stor.wsgi.application'
 
-# ==============================================================================
-# DATABASE
-# ==============================================================================
+
+# تنظیمات دیتابیس
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL'),
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=True,
+        default=os.getenv('DATABASE_URL')
     )
 }
+
 # ==============================================================================
 # PASSWORD VALIDATION
 # ==============================================================================
@@ -138,9 +138,9 @@ LOGOUT_REDIRECT_URL = 'core:home'
 # Zarinpal Settings
 ZARINPAL_CONFIG = {
     'SANDBOX': os.environ.get('SANDBOX', 'True') == 'True',
-    'MERCHANT_ID': os.environ.get('MERCHANT_ID', 'your-test-merchant-id'),
+    'MERCHANT_ID': os.environ.get('MERCHANT_ID', 'xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx'),
+    'CALLBACK_URL': os.environ.get('ZARINPAL_CALLBACK', 'https://yourdomain.com/zarinpal/verify/')
 }
-
 # Email Settings
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -169,3 +169,11 @@ LOGGING = {
         'level': 'DEBUG',
     },
 }
+
+
+# تنظیمات امنیتی برای Production
+if not DEBUG:
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
