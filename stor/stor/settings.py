@@ -137,10 +137,9 @@ AUTH_USER_MODEL = 'account.CustomUser'
 LOGOUT_REDIRECT_URL = 'core:home'
 
 # Zarinpal Settings
-ZARINPAL_CONFIG = {
-    'SANDBOX': os.environ.get('SANDBOX', 'True') == 'True',
-    'MERCHANT_ID': os.environ.get('MERCHANT_ID', '00000000-0000-0000-0000-000000000000'),
-}
+SANDBOX = os.environ.get('SANDBOX', 'True') == 'True'  
+MERCHANT_ID = os.environ.get('MERCHANT_ID', '00000000-0000-0000-0000-000000000000') 
+
 
 # Email Settings
 if DEBUG:
