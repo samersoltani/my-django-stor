@@ -5,7 +5,7 @@ import requests
 import json
 
 #? بررسی حالت سندباکس (تستی) یا واقعی
-if settings.SANDBOX:
+if settings.ZARINPAL_CONFIG['SANDBOX']:
     sandbox = 'sandbox'
 else:
     sandbox = 'www'
@@ -90,3 +90,4 @@ def request(request):
 def verify(request):
     # این ویو هم در مرحله بعد توسط ویوی اصلی ما صدا زده می‌شود
     return HttpResponse("در حال تایید پرداخت...")
+

@@ -10,9 +10,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get('SECRET_KEY', 'your-secret-key-here')
 
-DEBUG = os.environ.get('DEBUG', 'False') == 'True'
+DEBUG = True
+# os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+ALLOWED_HOSTS = ['*']
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
@@ -56,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 ROOT_URLCONF = 'stor.urls'
 
 TEMPLATES = [
@@ -80,15 +81,13 @@ WSGI_APPLICATION = 'stor.wsgi.application'
 # ==============================================================================
 # DATABASE
 # ==============================================================================
-
 DATABASES = {
     'default': dj_database_url.config(
         default=os.getenv('DATABASE_URL'),
         conn_max_age=600,
-        ssl_require=not DEBUG
+        ssl_require=True
     )
 }
-
 # ==============================================================================
 # PASSWORD VALIDATION
 # ==============================================================================
@@ -137,9 +136,10 @@ AUTH_USER_MODEL = 'account.CustomUser'
 LOGOUT_REDIRECT_URL = 'core:home'
 
 # Zarinpal Settings
-SANDBOX = os.environ.get('SANDBOX', 'True') == 'True'  
-MERCHANT_ID = os.environ.get('MERCHANT_ID', '00000000-0000-0000-0000-000000000000') 
-
+ZARINPAL_CONFIG = {
+    'SANDBOX': os.environ.get('SANDBOX', 'True') == 'True',
+    'MERCHANT_ID': os.environ.get('MERCHANT_ID', 'your-test-merchant-id'),
+}
 
 # Email Settings
 if DEBUG:
@@ -154,3 +154,18 @@ else:
 
 DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'noreply@example.com')
 ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL', 'admin@example.com')
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+}
